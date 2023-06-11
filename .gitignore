@@ -1,0 +1,9 @@
+moltemplate_*
+data
+output_ttree
+*lammpstrj
+log.lammpstrj
+*.EXAMPLE
+*.data
+*.in.*
+*.log

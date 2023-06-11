@@ -1,0 +1,22 @@
+
+
+# ----------------- Init Section -----------------
+
+include "system.in.init"
+
+
+# ----------------- Atom Definition Section -----------------
+
+read_data "system.data"
+
+# ----------------- Settings Section -----------------
+
+include "system.in.settings"
+
+thermo 10
+
+dump d0 all image 100 dump.*.jpg type type view 90 0 
+group all type 0 1
+fix 2 all setforce 0.0 0.0 0.0
+minimize 1.0e-4 1.0e-6 1000 10000
+

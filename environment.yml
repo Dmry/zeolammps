@@ -1,0 +1,11 @@
+name: clay
+channels:
+  - conda-forge
+  - nvidia
+dependencies:
+  - python==3.9.5
+  - pip
+  - pip:
+    - git+https://github.com/kul-group/MAZE-sim.git
+    - ase
+    - lammps
