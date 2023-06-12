@@ -84,7 +84,8 @@ def bonds_block(zeolite, el1, el2):
 def coeff_block():
     content = [
         "pair_coeff @atom:Si @atom:Si 0.0000018402 3.3019566252",
-        "pair_coeff @atom:O  @atom:O 0.1554164124 3.1655200879"
+        "pair_coeff @atom:O  @atom:O 0.1554164124 3.1655200879",
+        "pair_modify mix arithmetic"
     ]
 
     return FunctionBlock("write_once", "In Settings", content)
