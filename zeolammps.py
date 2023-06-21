@@ -1,7 +1,11 @@
 from maze import Zeolite
 from ase.geometry.analysis import Analysis
+from ase.lattice.orthorhombic import SimpleOrthorhombic
+from ase.spacegroup import crystal
+from ase.build import add_vacuum
 
 bea_zeolite = Zeolite.make('BEA') 
+bea_zeolite = bea_zeolite.cap_atoms()
 
 for key, idx in bea_zeolite.get_atom_types().items():
     if key == "framework-Si":
@@ -12,6 +16,9 @@ for key, idx in bea_zeolite.get_atom_types().items():
         for idx, atom_i in enumerate(idx):
             bea_zeolite[atom_i].charge = -1.05
             bea_zeolite[atom_i].tag = 2
+
+bea_zeolite = crystal(symbols=bea_zeolite, size=(3,3,3), cell=bea_zeolite.cell)
+bea_zeolite.center(vacuum=5, axis=(1,1))
 
 def write_header(f):
     f.write("""
@@ -36,7 +43,7 @@ def write_atoms(f, zeolite, indentation):
     f.write("}\n")
 
 def write_masses(f, zeolite, indentation):
-    element_indices, _ = zeolite.count_elements()
+    element_indices = zeolite.symbols.indices()
     element_mass = {element:zeolite[index[0]].mass for (element,index) in element_indices.items()}
 
     f.write(indentation)
@@ -111,7 +118,7 @@ with open('test.lt', 'w') as f:
     write_header(f)
     write_masses(f, bea_zeolite, indentation)
     write_atoms(f, bea_zeolite, indentation)
-    write_angles(f, bea_zeolite, indentation, "Si", "O")
+    #write_angles(f, bea_zeolite, indentation, "Si", "O")
     #write_bonds(f, bea_zeolite, indentation, "Si", "O")
     write_settings(f, bea_zeolite, indentation)
     f.write("}")
